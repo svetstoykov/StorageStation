@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\StorageStation.Domain\StorageStation.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
