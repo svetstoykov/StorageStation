@@ -10,16 +10,12 @@ namespace StorageStation.Infrastructure.Common.Extensions
     public static class InfrastructureExtensions
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration config)
-        {
-            // services
-                //.AddDbContext(config)
-
-            return services
+            => services
+                .AddDbContext(config)
                 .Scan(scan => scan
                     .FromCallingAssembly()
                     .AddClasses()
                     .AsMatchingInterface());
-        }
 
         private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration config)
             => services.AddDbContext<StorageStationDbContext>(options =>

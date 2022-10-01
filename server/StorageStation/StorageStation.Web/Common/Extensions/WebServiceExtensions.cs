@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using StorageStation.Domain.Common;
 
 namespace StorageStation.Web.Common.Extensions
 {
     public static class WebServiceExtensions
     {
-        private const string TokenKey = "TokenKey";
-
         private static Assembly ExecutingAssembly => Assembly.GetExecutingAssembly();
 
         public static IServiceCollection AddWebServices(this IServiceCollection services, IConfiguration configuration)
@@ -28,7 +27,7 @@ namespace StorageStation.Web.Common.Extensions
 
         private static IServiceCollection AddJwtAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[TokenKey]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration[GlobalConstants.TokenKey]));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(cfg =>

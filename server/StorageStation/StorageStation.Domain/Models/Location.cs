@@ -1,10 +1,10 @@
 ﻿namespace StorageStation.Domain.Models
 {
-    public sealed partial class Location
+    public sealed class Location
     {
         public Location()
         {
-            Products = new HashSet<Product>();
+            StoredItems = new HashSet<StoredItem>();
         }
 
         public int Id { get; set; }
@@ -13,6 +13,6 @@
         public int HouseholdId { get; set; }
 
         public Household Household { get; set; } = null!;
-        public ICollection<Product> Products { get; set; }
+        public ICollection<StoredItem> StoredItems { get; set; }
     }
 }

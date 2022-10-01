@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace StorageStation.Web.Common.Middleware.ErrorHandling.Models
+namespace StorageStation.Application.Common.ErrorHandling
 {
     public class AppException : Exception
     {

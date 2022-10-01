@@ -1,16 +1,22 @@
 ﻿namespace StorageStation.Domain.Models
 {
-    public partial class Product
+    public sealed class Product
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public int Qty { get; set; }
-        public int QtyInGrams { get; set; }
-        public int CategoryId { get; set; }
-        public int LocationId { get; set; }
+        public Product()
+        {
+            Items = new HashSet<Item>();
+            StoredItems = new HashSet<StoredItem>();
+        }
 
-        public virtual Category Category { get; set; } = null!;
-        public virtual Location Location { get; set; } = null!;
-        public virtual Description NameNavigation { get; set; } = null!;
+        public int Id { get; set; }
+        public string Content { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public int HouseholdId { get; set; }
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; } = null!;
+        public Household Household { get; set; } = null!;
+        public ICollection<Item> Items { get; set; }
+        public ICollection<StoredItem> StoredItems { get; set; }
     }
 }

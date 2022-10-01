@@ -1,13 +1,12 @@
 ﻿namespace StorageStation.Domain.Models
 {
-    public sealed partial class Household
+    public sealed class Household
     {
         public Household()
         {
             Categories = new HashSet<Category>();
-            Descriptions = new HashSet<Description>();
             Locations = new HashSet<Location>();
-            ShoppingLists = new HashSet<ShoppingList>();
+            Products = new HashSet<Product>();
             Users = new HashSet<User>();
         }
 
@@ -15,9 +14,8 @@
         public string Name { get; set; } = null!;
 
         public ICollection<Category> Categories { get; set; }
-        public ICollection<Description> Descriptions { get; set; }
         public ICollection<Location> Locations { get; set; }
-        public ICollection<ShoppingList> ShoppingLists { get; set; }
+        public ICollection<Product> Products { get; set; }
         public ICollection<User> Users { get; set; }
     }
 }

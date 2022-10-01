@@ -4,6 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StorageStation.Application.Common.Result;
+using StorageStation.Infrastructure.Users.Tokens;
 
 namespace StorageStation.Web.Common.Controllers
 {
@@ -21,9 +22,9 @@ namespace StorageStation.Web.Common.Controllers
             this.Mapper = mapper;
         }
         
-        protected int GetCurrentUserId => Convert.ToInt32(this.User.FindFirstValue(ClaimTypes.NameIdentifier));
+        protected int GetCurrentUserId => Convert.ToInt32(this.User.FindFirstValue(StorageStationClaimTypes.UserIdentifier));
         
-        protected string GetCurrentUserUsername => this.User.FindFirstValue(ClaimTypes.Name);
+        protected string GetCurrentUserUsername => this.User.FindFirstValue(StorageStationClaimTypes.Username);
         
         protected ActionResult HandleResult<TOutputData>(Result<TOutputData>? result)
         {

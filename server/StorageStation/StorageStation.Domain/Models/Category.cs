@@ -1,6 +1,6 @@
 ﻿namespace StorageStation.Domain.Models
 {
-    public sealed partial class Category
+    public sealed class Category
     {
         public Category()
         {

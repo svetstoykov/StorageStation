@@ -1,3 +1,5 @@
+using StorageStation.Application.Common.Extensions;
+using StorageStation.Infrastructure.Common.Extensions;
 using StorageStation.Web.Common.Extensions;
 using StorageStation.Web.Common.Middleware.ErrorHandling;
 
@@ -7,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.Services
-    .AddWebServices(config);
+    .AddWebServices(config)
+    .AddApplicationServices()
+    .AddInfrastructureServices(config);
 
 var app = builder.Build();
 

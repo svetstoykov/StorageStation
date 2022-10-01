@@ -15,12 +15,12 @@ namespace StorageStation.Infrastructure.Common.DbContext
         }
 
         public virtual DbSet<Category> Categories { get; set; } = null!;
-        public virtual DbSet<Description> Descriptions { get; set; } = null!;
         public virtual DbSet<Household> Households { get; set; } = null!;
         public virtual DbSet<Item> Items { get; set; } = null!;
         public virtual DbSet<Location> Locations { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<ShoppingList> ShoppingLists { get; set; } = null!;
+        public virtual DbSet<StoredItem> StoredItems { get; set; } = null!;
         public virtual DbSet<User> Users { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,26 +40,6 @@ namespace StorageStation.Infrastructure.Common.DbContext
                     .HasConstraintName("FK_Categories_Households");
             });
 
-            modelBuilder.Entity<Description>(entity =>
-            {
-                entity.ToTable("Descriptions", "product");
-
-                entity.HasIndex(e => e.Name, "UC_Name")
-                    .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
-
-                entity.Property(e => e.Content).HasMaxLength(200);
-
-                entity.Property(e => e.Name).HasMaxLength(100);
-
-                entity.HasOne(d => d.Household)
-                    .WithMany(p => p.Descriptions)
-                    .HasForeignKey(d => d.HouseholdId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Descriptions_Households");
-            });
-
             modelBuilder.Entity<Household>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(50);
@@ -69,7 +49,11 @@ namespace StorageStation.Infrastructure.Common.DbContext
             {
                 entity.ToTable("Items", "shopping_list");
 
-                entity.Property(e => e.Product).HasMaxLength(100);
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.Items)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Items_Products");
 
                 entity.HasOne(d => d.ShoppingList)
                     .WithMany(p => p.Items)
@@ -93,6 +77,13 @@ namespace StorageStation.Infrastructure.Common.DbContext
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.HasIndex(e => e.Name, "UC_Name")
+                    .IsUnique();
+
+                entity.Property(e => e.Id).ValueGeneratedNever();
+
+                entity.Property(e => e.Content).HasMaxLength(200);
+
                 entity.Property(e => e.Name).HasMaxLength(100);
 
                 entity.HasOne(d => d.Category)
@@ -101,18 +92,11 @@ namespace StorageStation.Infrastructure.Common.DbContext
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Products_Categories");
 
-                entity.HasOne(d => d.Location)
+                entity.HasOne(d => d.Household)
                     .WithMany(p => p.Products)
-                    .HasForeignKey(d => d.LocationId)
+                    .HasForeignKey(d => d.HouseholdId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Products_Locations");
-
-                entity.HasOne(d => d.NameNavigation)
-                    .WithMany(p => p.Products)
-                    .HasPrincipalKey(p => p.Name)
-                    .HasForeignKey(d => d.Name)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Products_Descriptions");
+                    .HasConstraintName("FK_Products_Households");
             });
 
             modelBuilder.Entity<ShoppingList>(entity =>
@@ -126,19 +110,30 @@ namespace StorageStation.Infrastructure.Common.DbContext
                     .HasForeignKey(d => d.CreatedByUserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ShoppingLists_Users");
+            });
 
-                entity.HasOne(d => d.Household)
-                    .WithMany(p => p.ShoppingLists)
-                    .HasForeignKey(d => d.HouseholdId)
+            modelBuilder.Entity<StoredItem>(entity =>
+            {
+                entity.ToTable("StoredItems", "location");
+
+                entity.HasOne(d => d.Location)
+                    .WithMany(p => p.StoredItems)
+                    .HasForeignKey(d => d.LocationId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ShoppingLists_Households");
+                    .HasConstraintName("FK_StoredItems_Locations");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.StoredItems)
+                    .HasForeignKey(d => d.ProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_StoredItems_Products");
             });
 
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.FirstName).HasMaxLength(50);
+                entity.Property(e => e.Email).HasMaxLength(100);
 
-                entity.Property(e => e.LastName).HasMaxLength(50);
+                entity.Property(e => e.FullName).HasMaxLength(50);
 
                 entity.Property(e => e.PasswordHash).HasMaxLength(1000);
 

@@ -2,7 +2,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
-using StorageStation.Web.Common.Middleware.ErrorHandling.Models;
+using StorageStation.Application.Common.ErrorHandling;
 
 namespace StorageStation.Web.Common.Middleware.ErrorHandling
 {
