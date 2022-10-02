@@ -4,49 +4,48 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using StorageStation.Application.Common.ErrorHandling;
 
-namespace StorageStation.Web.Common.Middleware.ErrorHandling
+namespace StorageStation.Web.Common.Middleware.ErrorHandling;
+
+public class ErrorHandlerMiddleware
 {
-    public class ErrorHandlerMiddleware
+    private const string SomethingWentWrong = "Oops! Something went wrong!";
+    private const string ResponseContentType = "application/json";
+
+    private readonly RequestDelegate _next;
+    private readonly IHostEnvironment _environment;
+
+    public ErrorHandlerMiddleware(RequestDelegate next, IHostEnvironment environment)
     {
-        private const string SomethingWentWrong = "Oops! Something went wrong!";
-        private const string ResponseContentType = "application/json";
+        this._next = next;
+        this._environment = environment;
+    }
 
-        private readonly RequestDelegate _next;
-        private readonly IHostEnvironment _environment;
-
-        public ErrorHandlerMiddleware(RequestDelegate next, IHostEnvironment environment)
+    public async Task Invoke(HttpContext context)
+    {
+        try
         {
-            this._next = next;
-            this._environment = environment;
+            await this._next(context);
         }
-
-        public async Task Invoke(HttpContext context)
+        catch (Exception ex)
         {
-            try
+            var response = context.Response;
+            response.ContentType = ResponseContentType;
+
+            response.StatusCode = ex switch
             {
-                await this._next(context);
-            }
-            catch (Exception ex)
+                AppException => (int)HttpStatusCode.BadRequest,
+                KeyNotFoundException => (int)HttpStatusCode.NotFound,
+                _ => (int)HttpStatusCode.InternalServerError
+            };
+
+            var exceptionResponse = this._environment.IsDevelopment()
+                ? ExceptionResponseModel.New(context.Response.StatusCode, ex.Message, ex.StackTrace)
+                : ExceptionResponseModel.New(response.StatusCode, SomethingWentWrong);
+
+            await response.WriteAsync(JsonSerializer.Serialize(exceptionResponse, new JsonSerializerOptions
             {
-                var response = context.Response;
-                response.ContentType = ResponseContentType;
-
-                response.StatusCode = ex switch
-                {
-                    AppException => (int)HttpStatusCode.BadRequest,
-                    KeyNotFoundException => (int)HttpStatusCode.NotFound,
-                    _ => (int)HttpStatusCode.InternalServerError
-                };
-
-                var exceptionResponse = this._environment.IsDevelopment()
-                    ? ExceptionResponseModel.New(context.Response.StatusCode, ex.Message, ex.StackTrace)
-                    : ExceptionResponseModel.New(response.StatusCode, SomethingWentWrong);
-
-                await response.WriteAsync(JsonSerializer.Serialize(exceptionResponse, new JsonSerializerOptions
-                {
-                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-                }));
-            }
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            }));
         }
     }
 }
