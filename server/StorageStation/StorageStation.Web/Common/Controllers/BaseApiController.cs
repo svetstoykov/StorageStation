@@ -26,7 +26,7 @@ namespace StorageStation.Web.Common.Controllers
         
         protected string GetCurrentUserUsername => this.User.FindFirstValue(StorageStationClaimTypes.Username);
         
-        protected ActionResult HandleResult<TOutputData>(Result<TOutputData>? result)
+        protected ActionResult HandleResult<TOutputData>(Result<TOutputData> result)
         {
             var message = result?.Message ?? string.Empty;
             

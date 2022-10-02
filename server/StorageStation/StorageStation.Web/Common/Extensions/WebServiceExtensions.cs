@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using StorageStation.Application.Common;
 using StorageStation.Domain.Common;
 
 namespace StorageStation.Web.Common.Extensions

@@ -1,16 +1,15 @@
-﻿namespace StorageStation.Application.Common.DataServices
+﻿using StorageStation.Domain.Common;
+
+namespace StorageStation.Application.Common.DataServices
 {
     public interface IEntityDataService<TDomainEntity>
-        where TDomainEntity : class, new()
+        where TDomainEntity : DomainEntity
     {
-        public IQueryable<TDomainEntity> GetAsQueryable();
-
-        public void Create(TDomainEntity activity);
-
-        public void Update(TDomainEntity activity);
-
-        public void Remove(TDomainEntity activity);
-
-        Task SaveChangesAsync(CancellationToken token = default, string? errorToShow = null);
+        IQueryable<TDomainEntity> GetAsQueryable();
+        Task SaveChangesAsync(CancellationToken token = default);
+        Task<TDomainEntity> GetByIdAsync(int id, CancellationToken token = default);
+        void Create(TDomainEntity activity);
+        void Update(TDomainEntity activity);
+        void Remove(TDomainEntity activity);
     }
 }

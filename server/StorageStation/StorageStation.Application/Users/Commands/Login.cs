@@ -12,8 +12,8 @@ public class Login
     {
         public Command(string username, string password)
         {
-            Username = username;
-            Password = password;
+            this.Username = username;
+            this.Password = password;
         }
 
         public string Username { get; }
@@ -27,13 +27,13 @@ public class Login
 
         public Handler(IUsersDataService usersDataService, ITokensService tokensService)
         {
-            _usersDataService = usersDataService;
-            _tokensService = tokensService;
+            this._usersDataService = usersDataService;
+            this._tokensService = tokensService;
         }
 
         public async Task<Result<string>> Handle(Command request, CancellationToken cancellationToken)
         {
-            var user = await _usersDataService.GetByUsernameAsync(request.Username);
+            var user = await this._usersDataService.GetByUsernameAsync(request.Username);
             if (user == null)
             {
                 return Result<string>.Unauthorized(
@@ -41,7 +41,7 @@ public class Login
             }
 
             return Argon2.Verify(user.PasswordHash, request.Password)
-                ? Result<string>.Success(_tokensService.GenerateToken(user))
+                ? Result<string>.Success(this._tokensService.GenerateToken(user))
                 : Result<string>.Unauthorized("Invalid Password");
         }
     }

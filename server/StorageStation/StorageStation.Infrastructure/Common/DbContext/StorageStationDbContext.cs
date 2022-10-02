@@ -14,14 +14,14 @@ namespace StorageStation.Infrastructure.Common.DbContext
         {
         }
 
-        public virtual DbSet<Category> Categories { get; set; } = null!;
-        public virtual DbSet<Household> Households { get; set; } = null!;
-        public virtual DbSet<Item> Items { get; set; } = null!;
-        public virtual DbSet<Location> Locations { get; set; } = null!;
-        public virtual DbSet<Product> Products { get; set; } = null!;
-        public virtual DbSet<ShoppingList> ShoppingLists { get; set; } = null!;
-        public virtual DbSet<StoredItem> StoredItems { get; set; } = null!;
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<Category> Categories { get; set; } 
+        public virtual DbSet<Household> Households { get; set; } 
+        public virtual DbSet<Item> Items { get; set; } 
+        public virtual DbSet<Location> Locations { get; set; } 
+        public virtual DbSet<Product> Products { get; set; } 
+        public virtual DbSet<ShoppingList> ShoppingLists { get; set; } 
+        public virtual DbSet<StoredItem> StoredItems { get; set; } 
+        public virtual DbSet<User> Users { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -79,8 +79,6 @@ namespace StorageStation.Infrastructure.Common.DbContext
             {
                 entity.HasIndex(e => e.Name, "UC_Name")
                     .IsUnique();
-
-                entity.Property(e => e.Id).ValueGeneratedNever();
 
                 entity.Property(e => e.Content).HasMaxLength(200);
 
@@ -146,7 +144,7 @@ namespace StorageStation.Infrastructure.Common.DbContext
                     .HasConstraintName("FK_Users_Households");
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            this.OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

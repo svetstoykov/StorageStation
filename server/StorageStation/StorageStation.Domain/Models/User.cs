@@ -1,20 +1,37 @@
-﻿namespace StorageStation.Domain.Models
+﻿using StorageStation.Domain.Common;
+
+namespace StorageStation.Domain.Models
 {
-    public sealed class User
+    public sealed class User : DomainEntity
     {
-        public User()
+        private List<ShoppingList> _shoppingLists = new();
+
+        private User()
         {
-            ShoppingLists = new HashSet<ShoppingList>();
         }
 
-        public int Id { get; set; }
-        public string Username { get; set; } = null!;
-        public string FullName { get; set; } = null!;
-        public string PasswordHash { get; set; } = null!;
-        public int HouseholdId { get; set; }
-        public string Email { get; set; } = null!;
+        public User(string username, string email, string fullName, string passwordHash, int? householdId = null)
+        {
+            this.Username = username;
+            this.Email = email;
+            this.FullName = fullName;
+            this.PasswordHash = passwordHash;
+            this.HouseholdId = householdId;
+        }
 
-        public Household Household { get; set; } = null!;
-        public ICollection<ShoppingList> ShoppingLists { get; set; }
+        public string Username { get; private set; }
+        public string FullName { get; private set; }
+        public string PasswordHash { get; private set; }
+        public int? HouseholdId { get; private set; }
+        public string Email { get; private set; }
+
+        public bool IsAdmin { get; private set; }
+        public Household Household { get; private set; } 
+
+        public IReadOnlyCollection<ShoppingList> ShoppingLists => this._shoppingLists.AsReadOnly();
+
+        public void UpdateUserAdminStatus(bool isAdmin)
+            =>
+                this.IsAdmin = isAdmin;
     }
 }

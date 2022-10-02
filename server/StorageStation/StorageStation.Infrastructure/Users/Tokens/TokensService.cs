@@ -3,18 +3,19 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using StorageStation.Application.Common;
 using StorageStation.Application.Users.Abstractions;
 using StorageStation.Domain.Common;
 using StorageStation.Domain.Models;
 
 namespace StorageStation.Infrastructure.Users.Tokens
 {
-    public class JwtTokensService : ITokensService
+    public class TokensService : ITokensService
     {
         private readonly IConfiguration _configuration;
         private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
 
-        public JwtTokensService(IConfiguration configuration)
+        public TokensService(IConfiguration configuration)
         {
             this._configuration = configuration;
             this._jwtSecurityTokenHandler = new JwtSecurityTokenHandler();

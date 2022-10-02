@@ -1,17 +1,22 @@
-﻿namespace StorageStation.Domain.Models
+﻿using StorageStation.Domain.Common;
+
+namespace StorageStation.Domain.Models
 {
-    public sealed class Category
+    public sealed class Category : DomainEntity
     {
-        public Category()
+        private List<Product> _products = new();
+        private Category() { }
+        
+        public Category(string name, int householdId)
         {
-            Products = new HashSet<Product>();
+            this.Name = name;
+            this.HouseholdId = householdId;
         }
+        public string Name { get; private set; }
+        public int HouseholdId { get; private set; }
 
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
-        public int HouseholdId { get; set; }
+        public Household Household { get; private set; }
 
-        public Household Household { get; set; } = null!;
-        public ICollection<Product> Products { get; set; }
+        public IReadOnlyCollection<Product> Products => this._products;
     }
 }

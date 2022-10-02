@@ -5,5 +5,5 @@ namespace StorageStation.Application.Users.DataServices;
 
 public interface IUsersDataService : IEntityDataService<User>
 {
-    Task<User?> GetByUsernameAsync(string username);
+    Task<User> GetByUsernameAsync(string username);
 }

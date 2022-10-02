@@ -1,21 +1,31 @@
-﻿namespace StorageStation.Domain.Models
+﻿using StorageStation.Domain.Common;
+
+namespace StorageStation.Domain.Models
 {
-    public sealed class Household
+    public sealed class Household : DomainEntity
     {
-        public Household()
+        private List<Category> _categories = new();
+        private List<Location> _locations = new();
+        private List<Product> _products = new();
+        private List<User> _users = new();
+
+        private Household() { }
+        
+        public Household(string name)
         {
-            Categories = new HashSet<Category>();
-            Locations = new HashSet<Location>();
-            Products = new HashSet<Product>();
-            Users = new HashSet<User>();
+            this.Name = name;
         }
+        public string Name { get; private set; }
 
-        public int Id { get; set; }
-        public string Name { get; set; } = null!;
+        public IReadOnlyCollection<Category> Categories => this._categories.AsReadOnly();
 
-        public ICollection<Category> Categories { get; set; }
-        public ICollection<Location> Locations { get; set; }
-        public ICollection<Product> Products { get; set; }
-        public ICollection<User> Users { get; set; }
+        public IReadOnlyCollection<Location> Locations => this._locations.AsReadOnly();
+
+        public IReadOnlyCollection<Product> Products => this._products.AsReadOnly();
+
+        public IReadOnlyCollection<User> Users => this._users.AsReadOnly();
+
+        public void AddUserToHousehold(User user)
+            => this._users.Add(user);
     }
 }

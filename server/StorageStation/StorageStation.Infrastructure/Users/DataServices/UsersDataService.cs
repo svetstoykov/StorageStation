@@ -12,6 +12,6 @@ public class UsersDataService : EntityDataService<User>, IUsersDataService
     {
     }
 
-    public async Task<User?> GetByUsernameAsync(string username)
+    public async Task<User> GetByUsernameAsync(string username)
         => await this.DataSet.FirstOrDefaultAsync(u => u.Username == username);
 }

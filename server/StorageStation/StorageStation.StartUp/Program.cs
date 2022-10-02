@@ -1,3 +1,7 @@
+using System.Linq;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using StorageStation.Application.Common.Extensions;
 using StorageStation.Infrastructure.Common.Extensions;
 using StorageStation.Web.Common.Extensions;
@@ -10,8 +14,8 @@ var config = builder.Configuration;
 
 builder.Services
     .AddWebServices(config)
-    .AddApplicationServices()
-    .AddInfrastructureServices(config);
+    .AddInfrastructureServices(config)
+    .AddApplicationServices();
 
 var app = builder.Build();
 

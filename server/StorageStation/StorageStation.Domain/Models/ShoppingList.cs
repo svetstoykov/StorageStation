@@ -1,18 +1,28 @@
-﻿namespace StorageStation.Domain.Models
+﻿using StorageStation.Domain.Common;
+
+namespace StorageStation.Domain.Models
 {
-    public sealed class ShoppingList
+    public sealed class ShoppingList : DomainEntity
     {
-        public ShoppingList()
+        private List<Item> _items = new();
+
+        private ShoppingList() { }
+
+        public ShoppingList(int createdByUserId, DateTime dateCreated)
         {
-            Items = new HashSet<Item>();
+            this.CreatedByUserId = createdByUserId;
+            this.DateCreated = dateCreated;
         }
 
-        public int Id { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime? DateCompleted { get; set; }
-        public int CreatedByUserId { get; set; }
+        public DateTime DateCreated { get; private set;}
+        public DateTime? DateCompleted { get; private set;}
+        public int CreatedByUserId { get; private set;}
 
-        public User CreatedByUser { get; set; } = null!;
-        public ICollection<Item> Items { get; set; }
+        public User CreatedByUser { get; private set;}
+        public IReadOnlyCollection<Item> Items => this._items.AsReadOnly();
+
+        public void AddItemToShoppingList(Item item)
+            =>
+                this._items.Add(item);
     }
 }
