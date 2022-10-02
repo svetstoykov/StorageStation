@@ -26,6 +26,7 @@ public class UsersController : BaseApiController
         => this.HandleResult(await this.Mediator.Send(
             new Register.Command(request.FullName, request.Username, request.Password, request.Email)));
 
+    [HttpPost("setUserAsAdmin")]
     public async Task<IActionResult> SetUserAsAdmin(SetUserAsAdminApiModel request)
         => this.HandleResult(await this.Mediator.Send(
             new SetUserAsAdmin.Command(request.UserIdToSetAsAdmin, this.GetCurrentUserId)));
