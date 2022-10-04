@@ -1,21 +1,20 @@
-﻿namespace StorageStation.Web.Common.Middleware.ErrorHandling
+﻿namespace StorageStation.Web.Common.Middleware.ErrorHandling;
+
+public class ExceptionResponseModel
 {
-    public class ExceptionResponseModel
+    private ExceptionResponseModel(int statusCode, string message, string details = null)
     {
-        private ExceptionResponseModel(int statusCode, string message, string details = null)
-        {
-            this.StatusCode = statusCode;
-            this.Message = message;
-            this.Details = details;
-        }
-
-        public int StatusCode { get; }
-
-        public string Message { get; }
-
-        public string Details { get; }
-
-        public static ExceptionResponseModel New(int statusCode, string message, string details = null) =>
-            new(statusCode, message, details);
+        this.StatusCode = statusCode;
+        this.Message = message;
+        this.Details = details;
     }
+
+    public int StatusCode { get; }
+
+    public string Message { get; }
+
+    public string Details { get; }
+
+    public static ExceptionResponseModel New(int statusCode, string message, string details = null) =>
+        new(statusCode, message, details);
 }

@@ -8,41 +8,40 @@ using StorageStation.Application.Users.Abstractions;
 using StorageStation.Domain.Common;
 using StorageStation.Domain.Models;
 
-namespace StorageStation.Infrastructure.Users.Tokens
+namespace StorageStation.Infrastructure.Users.Tokens;
+
+public class TokensService : ITokensService
 {
-    public class TokensService : ITokensService
+    private readonly IConfiguration _configuration;
+    private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
+
+    public TokensService(IConfiguration configuration)
     {
-        private readonly IConfiguration _configuration;
-        private readonly JwtSecurityTokenHandler _jwtSecurityTokenHandler;
+        this._configuration = configuration;
+        this._jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
+    }
 
-        public TokensService(IConfiguration configuration)
+    public string GenerateToken(User user)
+    {
+        var claims = new List<Claim>()
         {
-            this._configuration = configuration;
-            this._jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-        }
+            new(StorageStationClaimTypes.Username, user.Username),
+            new(StorageStationClaimTypes.UserIdentifier, user.Id.ToString()),
+            new(StorageStationClaimTypes.HouseholdIdentifier, user.HouseholdId.ToString()),
+        };
 
-        public string GenerateToken(User user)
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._configuration[GlobalConstants.TokenKey]));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
+        var tokenDescriptor = new SecurityTokenDescriptor()
         {
-            var claims = new List<Claim>()
-            {
-                new(StorageStationClaimTypes.Username, user.Username),
-                new(StorageStationClaimTypes.UserIdentifier, user.Id.ToString()),
-                new(StorageStationClaimTypes.HouseholdIdentifier, user.HouseholdId.ToString()),
-            };
+            Subject = new ClaimsIdentity(claims),
+            Expires = DateTime.Now.AddDays(7),
+            SigningCredentials = credentials
+        };
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this._configuration[GlobalConstants.TokenKey]));
-            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+        var token = this._jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
 
-            var tokenDescriptor = new SecurityTokenDescriptor()
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
-                SigningCredentials = credentials
-            };
-
-            var token = this._jwtSecurityTokenHandler.CreateToken(tokenDescriptor);
-
-            return this._jwtSecurityTokenHandler.WriteToken(token);
-        }
+        return this._jwtSecurityTokenHandler.WriteToken(token);
     }
 }
