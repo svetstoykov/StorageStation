@@ -24,7 +24,7 @@ const theme = createTheme({
     },
 });
 
-export default function HomePage() {
+export default function LoginPage() {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);

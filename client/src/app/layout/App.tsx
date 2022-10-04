@@ -3,14 +3,17 @@ import { store, history } from "../../store";
 import { Provider } from "react-redux";
 import { HistoryRouter as Router } from "redux-first-history/rr6";
 import { Route, Routes } from "react-router-dom";
-import HomePage from "../features/home/HomePage";
+import LoginPage from "../features/login/components/LoginPage";
+import MainLayout from "./MainLayout";
 
 function App() {
+
     return (
         <Provider store={store}>
             <Router history={history}>
                 <Routes>
-                    <Route path="/" element={<HomePage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/*" element={<MainLayout/>} />
                 </Routes>
             </Router>
         </Provider>
