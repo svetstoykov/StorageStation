@@ -1,8 +1,7 @@
 import { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
-import NavBar from './NavBar'
+import NavBar from './shared/NavBar'
 import HomePage from '../features/home/components/HomePage'
-import SideMenuDrawer from '../features/home/components/SideMenuDrawer'
 
 function MainLayout(){
     return (
@@ -10,7 +9,6 @@ function MainLayout(){
             <NavBar/>
             <Routes>
                 <Route path='/' element={<HomePage/>}/>
-                <Route path='/sidebar' element={<SideMenuDrawer/>}/>
             </Routes>
         </Fragment>
     )
