@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Routes, Route } from "react-router-dom";
 import NavBar from './shared/NavBar'
-import HomePage from '../features/home/components/HomePage'
+import HomePage from '../features/home/HomePage'
 
 function MainLayout(){
     return (
