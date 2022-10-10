@@ -1,5 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using StorageStation.Domain.Models;
+using StorageStation.Domain.Locations;
+using StorageStation.Domain.Products;
+using StorageStation.Domain.ShoppingLists;
+using StorageStation.Domain.Users;
 
 namespace StorageStation.Infrastructure.Common.DbContext;
 
@@ -80,7 +83,7 @@ public partial class StorageStationDbContext : Microsoft.EntityFrameworkCore.DbC
             entity.HasIndex(e => e.Name, "UC_Name")
                 .IsUnique();
 
-            entity.Property(e => e.Content).HasMaxLength(200);
+            entity.Property(e => e.Description).HasMaxLength(200);
 
             entity.Property(e => e.Name).HasMaxLength(100);
 

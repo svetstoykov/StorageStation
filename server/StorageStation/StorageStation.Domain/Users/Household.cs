@@ -1,6 +1,8 @@
 ﻿using StorageStation.Domain.Common;
+using StorageStation.Domain.Locations;
+using StorageStation.Domain.Products;
 
-namespace StorageStation.Domain.Models;
+namespace StorageStation.Domain.Users;
 
 public sealed class Household : DomainEntity
 {

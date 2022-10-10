@@ -2,5 +2,5 @@
 
 public abstract class DomainEntity
 {
-    public int Id { get; private set; }
+    public int Id { get; protected set; }
 }

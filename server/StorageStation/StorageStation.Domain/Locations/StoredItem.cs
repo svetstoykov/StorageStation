@@ -1,6 +1,7 @@
 ﻿using StorageStation.Domain.Common;
+using StorageStation.Domain.Products;
 
-namespace StorageStation.Domain.Models;
+namespace StorageStation.Domain.Locations;
 
 public sealed class StoredItem : DomainEntity
 {
