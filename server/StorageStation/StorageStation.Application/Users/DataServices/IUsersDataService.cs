@@ -1,5 +1,5 @@
 ﻿using StorageStation.Application.Common.DataServices;
-using StorageStation.Domain.Models;
+using StorageStation.Domain.Users;
 
 namespace StorageStation.Application.Users.DataServices;
 

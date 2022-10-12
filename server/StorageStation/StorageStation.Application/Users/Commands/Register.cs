@@ -3,7 +3,7 @@ using MediatR;
 using StorageStation.Application.Common.Result;
 using StorageStation.Application.Users.Abstractions;
 using StorageStation.Application.Users.DataServices;
-using StorageStation.Domain.Models;
+using StorageStation.Domain.Users;
 
 namespace StorageStation.Application.Users.Commands;
 

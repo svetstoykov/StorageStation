@@ -1,6 +1,9 @@
 ﻿using StorageStation.Domain.Common;
+using StorageStation.Domain.Locations;
+using StorageStation.Domain.ShoppingLists;
+using StorageStation.Domain.Users;
 
-namespace StorageStation.Domain.Models;
+namespace StorageStation.Domain.Products;
 
 public sealed class Product : DomainEntity
 {
@@ -18,7 +21,7 @@ public sealed class Product : DomainEntity
         this.HouseholdId = householdId;
     }
 
-    public string Content { get; private set; }
+    public string Description { get; private set; }
     public string Name { get; private set; } 
     public int HouseholdId { get; private set; }
     public int CategoryId { get; private set; }

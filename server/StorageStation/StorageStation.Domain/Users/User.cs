@@ -1,6 +1,7 @@
 ﻿using StorageStation.Domain.Common;
+using StorageStation.Domain.ShoppingLists;
 
-namespace StorageStation.Domain.Models;
+namespace StorageStation.Domain.Users;
 
 public sealed class User : DomainEntity
 {
@@ -31,6 +32,5 @@ public sealed class User : DomainEntity
     public IReadOnlyCollection<ShoppingList> ShoppingLists => this._shoppingLists.AsReadOnly();
 
     public void UpdateUserAdminStatus(bool isAdmin)
-        =>
-            this.IsAdmin = isAdmin;
+        => this.IsAdmin = isAdmin;
 }

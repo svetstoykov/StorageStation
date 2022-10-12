@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using StorageStation.Application.Users.DataServices;
-using StorageStation.Domain.Models;
+using StorageStation.Domain.Users;
 using StorageStation.Infrastructure.Common.DataServices;
 using StorageStation.Infrastructure.Common.DbContext;
 

@@ -1,14 +1,16 @@
 ﻿using StorageStation.Domain.Common;
+using StorageStation.Domain.Users;
 
-namespace StorageStation.Domain.Models;
+namespace StorageStation.Domain.Products;
 
 public sealed class Category : DomainEntity
 {
     private List<Product> _products = new();
     private Category() { }
         
-    public Category(string name, int householdId)
+    public Category(int id, string name, int householdId)
     {
+        this.Id = id;
         this.Name = name;
         this.HouseholdId = householdId;
     }

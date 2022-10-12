@@ -1,6 +1,7 @@
 ﻿using StorageStation.Domain.Common;
+using StorageStation.Domain.Users;
 
-namespace StorageStation.Domain.Models;
+namespace StorageStation.Domain.Locations;
 
 public sealed class Location : DomainEntity
 {

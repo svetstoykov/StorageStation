@@ -6,7 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using StorageStation.Application.Common;
 using StorageStation.Application.Users.Abstractions;
 using StorageStation.Domain.Common;
-using StorageStation.Domain.Models;
+using StorageStation.Domain.Users;
 
 namespace StorageStation.Infrastructure.Users.Tokens;
 
