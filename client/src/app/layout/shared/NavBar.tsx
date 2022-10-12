@@ -5,12 +5,12 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import TuneIcon from '@mui/icons-material/Tune';
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SideMenuDrawer from "./SideMenuDrawer/SideMenuDrawer";
 
-export default function MenuAppBar() {
+export default function NavBar() {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const [sideDrawerVisible, setSideDrawerVisible] = React.useState(false);
 
@@ -52,7 +52,7 @@ export default function MenuAppBar() {
                             onClick={handleMenu}
                             color="inherit"
                         >
-                            <AccountCircle />
+                            <TuneIcon />
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -69,8 +69,7 @@ export default function MenuAppBar() {
                             open={Boolean(anchorEl)}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
-                            <MenuItem onClick={handleClose}>My account</MenuItem>
+                            <MenuItem onClick={handleClose}>Add New Location</MenuItem>
                         </Menu>
                     </div>
                 </Toolbar>

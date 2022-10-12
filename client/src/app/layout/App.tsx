@@ -7,13 +7,12 @@ import LoginPage from "../features/login/LoginPage";
 import MainLayout from "./MainLayout";
 
 function App() {
-
     return (
         <Provider store={store}>
             <Router history={history}>
                 <Routes>
                     <Route path="/login" element={<LoginPage />} />
-                    <Route path="/*" element={<MainLayout/>} />
+                    <Route path="/*" element={<MainLayout />} />
                 </Routes>
             </Router>
         </Provider>

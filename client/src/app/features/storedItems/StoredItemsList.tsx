@@ -2,19 +2,32 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from '@mui/icons-material/Home';
+import LabelIcon from "@mui/icons-material/Label";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
-import { Link } from "react-router-dom";
 
-export default function BasicList() {
-    const locations = ["Home", "Garage"];
+interface Product {
+    name: string;
+    quantity: number;
+}
+
+function StoredItemsList() {
+    const products: Product[] = [
+        {
+            quantity: 5,
+            name: "Apple",
+        },
+        {
+            quantity: 1,
+            name: "Juice",
+        },
+    ];
 
     return (
         <List>
-            {locations.map((location) => (
+            {products.map((product) => (
                 <ListItem
                     disablePadding
                     secondaryAction={
@@ -23,16 +36,18 @@ export default function BasicList() {
                         </IconButton>
                     }
                 >
-                    <ListItemButton component={Link} to={"/storedItems"}>
+                    <ListItemButton>
                         <ListItemAvatar>
                             <Avatar>
-                                <HomeIcon />
+                                <LabelIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={location} />
+                        <ListItemText primary={product.name} />
                     </ListItemButton>
                 </ListItem>
             ))}
         </List>
     );
 }
+
+export default StoredItemsList;
